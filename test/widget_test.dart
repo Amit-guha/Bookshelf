@@ -1,30 +1,45 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
+import 'package:bookshelf/core/error/result.dart';
+import 'package:bookshelf/features/books/domain/entities/book.dart';
+import 'package:bookshelf/features/books/domain/entities/book_details.dart';
+import 'package:bookshelf/features/books/domain/entities/trending_period.dart';
+import 'package:bookshelf/features/books/domain/repositories/book_repository.dart';
+import 'package:bookshelf/features/books/presentation/providers/book_providers.dart';
+import 'package:bookshelf/main.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:bookshelf/main.dart';
+class _FakeBookRepository implements BookRepository {
+  @override
+  Future<Result<List<Book>>> getTrendingBooks(TrendingPeriod period) async =>
+      const Success([]);
+
+  @override
+  Future<Result<List<Book>>> getBooksBySubject(
+    String subject, {
+    int limit = 20,
+  }) async => const Success([]);
+
+  @override
+  Future<Result<BookDetails>> getBookDetails(String key) async =>
+      Success(BookDetails(key: key, title: ''));
+}
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
-
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+  testWidgets('renders home screen with trending and classic book sections', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          bookRepositoryProvider.overrideWithValue(_FakeBookRepository()),
+        ],
+        child: const MyApp(),
+      ),
+    );
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('Bookshelf'), findsOneWidget);
+    expect(find.text('Trending Books'), findsOneWidget);
+    expect(find.text('Classic Books'), findsOneWidget);
   });
 }

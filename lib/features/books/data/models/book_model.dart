@@ -1,0 +1,55 @@
+import 'package:bookshelf/core/constants/api_constants.dart';
+import 'package:bookshelf/features/books/domain/entities/book.dart';
+
+/// Maps OpenLibrary "work" JSON to [Book]. The Trending and Subjects APIs
+/// return slightly different field names for the same concepts (author
+/// names, cover id) — [fromTrendingJson]/[fromSubjectJson] normalize both
+/// into this same shape.
+class BookModel {
+  const BookModel({
+    required this.key,
+    required this.title,
+    this.authorNames = const [],
+    this.coverId,
+    this.firstPublishYear,
+  });
+
+  factory BookModel.fromTrendingJson(Map<String, dynamic> json) => BookModel(
+    key: json['key'] as String? ?? '',
+    title: json['title'] as String? ?? '',
+    authorNames:
+        (json['author_name'] as List?)?.map((e) => e.toString()).toList() ??
+        const [],
+    coverId: json['cover_i'] as int?,
+    firstPublishYear: json['first_publish_year'] as int?,
+  );
+
+  factory BookModel.fromSubjectJson(Map<String, dynamic> json) => BookModel(
+    key: json['key'] as String? ?? '',
+    title: json['title'] as String? ?? '',
+    authorNames:
+        (json['authors'] as List?)
+            ?.map((a) => (a as Map<String, dynamic>)['name']?.toString() ?? '')
+            .where((name) => name.isNotEmpty)
+            .toList() ??
+        const [],
+    coverId: json['cover_id'] as int?,
+    firstPublishYear: json['first_publish_year'] as int?,
+  );
+
+  final String key;
+  final String title;
+  final List<String> authorNames;
+  final int? coverId;
+  final int? firstPublishYear;
+
+  Book toEntity() => Book(
+    key: key,
+    title: title,
+    authorNames: authorNames,
+    coverUrl: coverId != null
+        ? ApiConstants.coverUrl(key: 'id', value: coverId.toString())
+        : null,
+    firstPublishYear: firstPublishYear,
+  );
+}

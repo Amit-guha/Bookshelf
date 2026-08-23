@@ -1,0 +1,1 @@
+enum TrendingPeriod { daily, weekly, monthly, yearly, forever }
