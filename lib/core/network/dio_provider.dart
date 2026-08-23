@@ -17,7 +17,6 @@ Dio dio(Ref ref) {
       connectTimeout: ApiConstants.connectTimeout,
       receiveTimeout: ApiConstants.receiveTimeout,
       sendTimeout: ApiConstants.sendTimeout,
-      headers: const {ApiConstants.contentTypeHeader: 'application/json'},
     ),
   );
 

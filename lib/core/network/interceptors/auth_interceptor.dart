@@ -129,6 +129,7 @@ class AuthInterceptor extends Interceptor {
       final response = await _refreshDio.post<Map<String, dynamic>>(
         _refreshPath,
         data: {'refresh_token': refreshToken},
+        options: Options(contentType: Headers.jsonContentType),
       );
 
       final data = response.data;
