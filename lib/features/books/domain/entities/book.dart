@@ -6,6 +6,7 @@ class Book {
     this.coverUrl,
     this.firstPublishYear,
     this.editionKey,
+    this.authorKey,
   });
 
   final String key;
@@ -18,4 +19,8 @@ class Book {
   /// [BookRepository.getReadAccess] — `null` when the source API didn't
   /// surface a representative edition for this work.
   final String? editionKey;
+
+  /// The first author's OLID — `null` when the source API didn't surface
+  /// one. Used to open the author page.
+  final String? authorKey;
 }

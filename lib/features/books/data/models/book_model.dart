@@ -13,6 +13,7 @@ class BookModel {
     this.coverId,
     this.firstPublishYear,
     this.editionKey,
+    this.authorKey,
   });
 
   factory BookModel.fromTrendingJson(Map<String, dynamic> json) => BookModel(
@@ -24,6 +25,7 @@ class BookModel {
     coverId: json['cover_i'] as int?,
     firstPublishYear: json['first_publish_year'] as int?,
     editionKey: json['cover_edition_key'] as String?,
+    authorKey: _authorKeyFrom(_firstOrNull(json['author_key'] as List?)),
   );
 
   factory BookModel.fromSubjectJson(Map<String, dynamic> json) => BookModel(
@@ -38,6 +40,9 @@ class BookModel {
     coverId: json['cover_id'] as int?,
     firstPublishYear: json['first_publish_year'] as int?,
     editionKey: json['cover_edition_key'] as String?,
+    authorKey: _authorKeyFrom(
+      (_firstOrNull(json['authors'] as List?) as Map<String, dynamic>?)?['key'],
+    ),
   );
 
   final String key;
@@ -46,6 +51,7 @@ class BookModel {
   final int? coverId;
   final int? firstPublishYear;
   final String? editionKey;
+  final String? authorKey;
 
   Book toEntity() => Book(
     key: key,
@@ -56,5 +62,16 @@ class BookModel {
         : null,
     firstPublishYear: firstPublishYear,
     editionKey: editionKey,
+    authorKey: authorKey,
   );
+
+  static Object? _firstOrNull(List? list) =>
+      list != null && list.isNotEmpty ? list.first : null;
+
+  /// Normalizes both shapes OpenLibrary returns an author key in — a bare
+  /// OLID (`trending`/`search`'s `author_key`) or a prefixed one
+  /// (`subjects`' `authors[].key`, e.g. `/authors/OL79034A`) — to a bare
+  /// OLID.
+  static String? _authorKeyFrom(dynamic key) =>
+      key?.toString().split('/').last;
 }

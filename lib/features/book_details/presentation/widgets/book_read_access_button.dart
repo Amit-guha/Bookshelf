@@ -1,5 +1,5 @@
-import 'package:bookshelf/features/books/domain/entities/book_read_access.dart';
-import 'package:bookshelf/features/books/presentation/widgets/shimmer_placeholder.dart';
+import 'package:bookshelf/features/book_details/domain/entities/book_read_access.dart';
+import 'package:bookshelf/core/widgets/shimmer_placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

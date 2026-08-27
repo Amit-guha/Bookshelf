@@ -33,4 +33,8 @@ abstract class ApiConstants {
     required String value,
     String size = 'M',
   }) => '$coversBaseUrl/b/$key/$value-$size.jpg';
+
+  /// [size] is `S`, `M`, or `L`.
+  static String authorPhotoUrl(String photoId, {String size = 'M'}) =>
+      '$coversBaseUrl/a/id/$photoId-$size.jpg';
 }

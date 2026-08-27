@@ -1,10 +1,11 @@
+import 'package:bookshelf/features/author/presentation/routes/author_routes.dart';
 import 'package:bookshelf/features/books/domain/entities/book.dart';
-import 'package:bookshelf/features/books/domain/entities/book_read_access.dart';
-import 'package:bookshelf/features/books/presentation/providers/book_providers.dart';
-import 'package:bookshelf/features/books/presentation/widgets/book_details_skeleton.dart';
-import 'package:bookshelf/features/books/presentation/widgets/book_detail_header.dart';
-import 'package:bookshelf/features/books/presentation/widgets/book_read_access_button.dart';
-import 'package:bookshelf/features/books/presentation/widgets/book_stats_row.dart';
+import 'package:bookshelf/features/book_details/domain/entities/book_read_access.dart';
+import 'package:bookshelf/features/book_details/presentation/providers/book_details_providers.dart';
+import 'package:bookshelf/features/book_details/presentation/widgets/book_details_skeleton.dart';
+import 'package:bookshelf/features/book_details/presentation/widgets/book_detail_header.dart';
+import 'package:bookshelf/features/book_details/presentation/widgets/book_read_access_button.dart';
+import 'package:bookshelf/features/book_details/presentation/widgets/book_stats_row.dart';
 import 'package:bookshelf/features/reader/presentation/routes/reader_routes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,13 @@ class BookDetailScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              BookDetailHeader(book: book),
+              BookDetailHeader(
+                book: book,
+                onAuthorTap: (authorKey) => context.pushNamed(
+                  AuthorRoutes.detailName,
+                  extra: authorKey,
+                ),
+              ),
               const SizedBox(height: 20),
               if (readAccessAsync != null)
                 Padding(

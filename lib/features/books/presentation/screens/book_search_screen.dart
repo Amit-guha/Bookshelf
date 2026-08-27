@@ -1,6 +1,6 @@
+import 'package:bookshelf/features/book_details/presentation/routes/book_detail_routes.dart';
 import 'package:bookshelf/features/books/domain/entities/book.dart';
 import 'package:bookshelf/features/books/presentation/providers/book_providers.dart';
-import 'package:bookshelf/features/books/presentation/routes/book_routes.dart';
 import 'package:bookshelf/features/books/presentation/widgets/book_grid_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -67,6 +67,6 @@ class _BookSearchScreenState extends ConsumerState<BookSearchScreen> {
   }
 
   void _openBookDetail(BuildContext context, Book book) {
-    context.pushNamed(BookRoutes.detailName, extra: book);
+    context.pushNamed(BookDetailRoutes.detailName, extra: book);
   }
 }

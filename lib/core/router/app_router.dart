@@ -1,3 +1,5 @@
+import 'package:bookshelf/features/author/presentation/routes/author_routes.dart';
+import 'package:bookshelf/features/book_details/presentation/routes/book_detail_routes.dart';
 import 'package:bookshelf/features/books/presentation/routes/book_routes.dart';
 import 'package:bookshelf/features/home/presentation/routes/home_routes.dart';
 import 'package:bookshelf/features/reader/presentation/routes/reader_routes.dart';
@@ -8,5 +10,13 @@ part 'app_router.g.dart';
 
 @riverpod
 GoRouter goRouter(Ref ref) {
-  return GoRouter(routes: [...homeRoutes, ...bookRoutes, ...readerRoutes]);
+  return GoRouter(
+    routes: [
+      ...homeRoutes,
+      ...bookRoutes,
+      ...bookDetailRoutes,
+      ...readerRoutes,
+      ...authorRoutes,
+    ],
+  );
 }

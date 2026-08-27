@@ -4,12 +4,8 @@ import 'package:bookshelf/core/network/api_client.dart';
 import 'package:bookshelf/features/books/data/datasource/book_remote_datasource.dart';
 import 'package:bookshelf/features/books/data/repositories/book_repository_impl.dart';
 import 'package:bookshelf/features/books/domain/entities/book.dart';
-import 'package:bookshelf/features/books/domain/entities/book_details.dart';
-import 'package:bookshelf/features/books/domain/entities/book_read_access.dart';
 import 'package:bookshelf/features/books/domain/entities/trending_period.dart';
 import 'package:bookshelf/features/books/domain/repositories/book_repository.dart';
-import 'package:bookshelf/features/books/domain/usecases/get_book_details.dart';
-import 'package:bookshelf/features/books/domain/usecases/get_book_read_access.dart';
 import 'package:bookshelf/features/books/domain/usecases/get_books_by_subject.dart';
 import 'package:bookshelf/features/books/domain/usecases/get_trending_books.dart';
 import 'package:bookshelf/features/books/domain/usecases/search_books.dart';
@@ -34,14 +30,6 @@ GetBooksBySubject getBooksBySubjectUsecase(Ref ref) =>
     GetBooksBySubject(ref.watch(bookRepositoryProvider));
 
 @riverpod
-GetBookDetails getBookDetailsUsecase(Ref ref) =>
-    GetBookDetails(ref.watch(bookRepositoryProvider));
-
-@riverpod
-GetBookReadAccess getBookReadAccessUsecase(Ref ref) =>
-    GetBookReadAccess(ref.watch(bookRepositoryProvider));
-
-@riverpod
 SearchBooks searchBooksUsecase(Ref ref) =>
     SearchBooks(ref.watch(bookRepositoryProvider));
 
@@ -61,24 +49,6 @@ Future<List<Book>> booksBySubject(Ref ref, String subject) async {
   final usecase = ref.watch(getBooksBySubjectUsecaseProvider);
   final result = await usecase(subject);
   return result.when(success: (books) => books, failure: (failure) => throw failure);
-}
-
-@riverpod
-Future<BookDetails> bookDetails(
-  Ref ref,
-  String workKey, {
-  String? editionKey,
-}) async {
-  final usecase = ref.watch(getBookDetailsUsecaseProvider);
-  final result = await usecase(workKey, editionKey: editionKey);
-  return result.when(success: (details) => details, failure: (failure) => throw failure);
-}
-
-@riverpod
-Future<BookReadAccess> bookReadAccess(Ref ref, String editionKey) async {
-  final usecase = ref.watch(getBookReadAccessUsecaseProvider);
-  final result = await usecase(editionKey);
-  return result.when(success: (access) => access, failure: (failure) => throw failure);
 }
 
 /// Search-as-you-type: [search] debounces 400ms and fires nothing for an

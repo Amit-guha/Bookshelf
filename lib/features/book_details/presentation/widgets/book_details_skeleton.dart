@@ -1,4 +1,4 @@
-import 'package:bookshelf/features/books/presentation/widgets/shimmer_placeholder.dart';
+import 'package:bookshelf/core/widgets/shimmer_placeholder.dart';
 import 'package:flutter/material.dart';
 
 /// Loading placeholder for the stats row + description block on

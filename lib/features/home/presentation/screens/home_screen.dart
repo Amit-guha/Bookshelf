@@ -1,3 +1,4 @@
+import 'package:bookshelf/features/book_details/presentation/routes/book_detail_routes.dart';
 import 'package:bookshelf/features/books/domain/entities/book.dart';
 import 'package:bookshelf/features/books/domain/entities/trending_period.dart';
 import 'package:bookshelf/features/books/presentation/providers/book_providers.dart';
@@ -94,5 +95,5 @@ class _GenreGrid extends ConsumerWidget {
 }
 
 void _openBookDetail(BuildContext context, Book book) {
-  context.pushNamed(BookRoutes.detailName, extra: book);
+  context.pushNamed(BookDetailRoutes.detailName, extra: book);
 }

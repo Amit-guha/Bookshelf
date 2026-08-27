@@ -1,7 +1,5 @@
 import 'package:bookshelf/core/error/result.dart';
 import 'package:bookshelf/features/books/domain/entities/book.dart';
-import 'package:bookshelf/features/books/domain/entities/book_details.dart';
-import 'package:bookshelf/features/books/domain/entities/book_read_access.dart';
 import 'package:bookshelf/features/books/domain/entities/trending_period.dart';
 import 'package:bookshelf/features/books/domain/repositories/book_repository.dart';
 import 'package:bookshelf/features/books/presentation/providers/book_providers.dart';
@@ -19,16 +17,6 @@ class _FakeBookRepository implements BookRepository {
     String subject, {
     int limit = 20,
   }) async => const Success([]);
-
-  @override
-  Future<Result<BookDetails>> getBookDetails(
-    String workKey, {
-    String? editionKey,
-  }) async => Success(BookDetails(key: workKey, title: ''));
-
-  @override
-  Future<Result<BookReadAccess>> getReadAccess(String editionKey) async =>
-      const Success(BookReadAccess(availability: EbookAvailability.none));
 
   @override
   Future<Result<List<Book>>> searchBooks(String query, {int limit = 20}) async =>

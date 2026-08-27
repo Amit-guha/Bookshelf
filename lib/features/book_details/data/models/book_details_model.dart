@@ -1,4 +1,4 @@
-import 'package:bookshelf/features/books/domain/entities/book_details.dart';
+import 'package:bookshelf/features/book_details/domain/entities/book_details.dart';
 
 /// Maps OpenLibrary's work/ratings/edition JSON responses to [BookDetails].
 /// `description` is inconsistently either a plain string or a

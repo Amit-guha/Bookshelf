@@ -1,5 +1,5 @@
-import 'package:bookshelf/features/books/data/models/book_read_access_model.dart';
-import 'package:bookshelf/features/books/domain/entities/book_read_access.dart';
+import 'package:bookshelf/features/book_details/data/models/book_read_access_model.dart';
+import 'package:bookshelf/features/book_details/domain/entities/book_read_access.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

@@ -1,4 +1,4 @@
-import 'package:bookshelf/features/books/domain/entities/book_read_access.dart';
+import 'package:bookshelf/features/book_details/domain/entities/book_read_access.dart';
 
 /// Maps one bibkey entry from OpenLibrary's
 /// `/api/books?bibkeys=OLID:{id}&jscmd=data` response to [BookReadAccess].

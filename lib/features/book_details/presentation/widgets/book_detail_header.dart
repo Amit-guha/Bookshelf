@@ -1,13 +1,18 @@
+import 'package:bookshelf/core/widgets/shimmer_placeholder.dart';
 import 'package:bookshelf/features/books/domain/entities/book.dart';
-import 'package:bookshelf/features/books/presentation/widgets/shimmer_placeholder.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 /// Cover + title/author/publish-year row for [BookDetailScreen]'s header.
 class BookDetailHeader extends StatelessWidget {
-  const BookDetailHeader({super.key, required this.book});
+  const BookDetailHeader({super.key, required this.book, this.onAuthorTap});
 
   final Book book;
+
+  /// Called with [book.authorKey] when the author name is tapped — only
+  /// wired up when that key is non-null, so a book with no resolvable
+  /// author doesn't show a dead tap target.
+  final ValueChanged<String>? onAuthorTap;
 
   @override
   Widget build(BuildContext context) {
@@ -54,11 +59,14 @@ class BookDetailHeader extends StatelessWidget {
               if (book.authorNames.isNotEmpty)
                 Padding(
                   padding: const EdgeInsets.only(top: 4),
-                  child: Text(
-                    book.authorNames.join(', '),
+                  child: _AuthorName(
+                    text: book.authorNames.join(', '),
                     style: theme.textTheme.titleSmall?.copyWith(
                       color: theme.colorScheme.primary,
                     ),
+                    onTap: book.authorKey == null
+                        ? null
+                        : () => onAuthorTap?.call(book.authorKey!),
                   ),
                 ),
               if (book.firstPublishYear != null)
@@ -76,6 +84,21 @@ class BookDetailHeader extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class _AuthorName extends StatelessWidget {
+  const _AuthorName({required this.text, this.style, this.onTap});
+
+  final String text;
+  final TextStyle? style;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final content = Text(text, style: style);
+    if (onTap == null) return content;
+    return GestureDetector(onTap: onTap, child: content);
   }
 }
 

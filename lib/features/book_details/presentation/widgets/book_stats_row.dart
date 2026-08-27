@@ -1,5 +1,5 @@
-import 'package:bookshelf/features/books/domain/entities/book_details.dart';
-import 'package:bookshelf/features/books/domain/entities/book_read_access.dart';
+import 'package:bookshelf/features/book_details/domain/entities/book_details.dart';
+import 'package:bookshelf/features/book_details/domain/entities/book_read_access.dart';
 import 'package:flutter/material.dart';
 
 /// A Play-Store-style row of rating/format/page-count stat chips. Only shows

@@ -1,4 +1,4 @@
-import 'package:bookshelf/features/books/data/models/book_details_model.dart';
+import 'package:bookshelf/features/book_details/data/models/book_details_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
