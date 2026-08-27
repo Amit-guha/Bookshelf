@@ -21,14 +21,18 @@ class BookCoverCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: AspectRatio(
-                aspectRatio: 2 / 3,
+            Expanded(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
                 child: coverUrl != null
                     ? CachedNetworkImage(
                         imageUrl: coverUrl,
                         fit: BoxFit.cover,
+                        width: double.infinity,
+                        // Cards render at ~120 logical px wide — cap the
+                        // decoded bitmap size so scrolling doesn't decode
+                        // each cover at its full downloaded resolution.
+                        memCacheWidth: 240,
                         placeholder: (context, url) =>
                             const _CoverPlaceholder(),
                         errorWidget: (context, url, error) =>

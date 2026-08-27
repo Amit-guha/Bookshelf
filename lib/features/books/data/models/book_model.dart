@@ -12,6 +12,7 @@ class BookModel {
     this.authorNames = const [],
     this.coverId,
     this.firstPublishYear,
+    this.editionKey,
   });
 
   factory BookModel.fromTrendingJson(Map<String, dynamic> json) => BookModel(
@@ -22,6 +23,7 @@ class BookModel {
         const [],
     coverId: json['cover_i'] as int?,
     firstPublishYear: json['first_publish_year'] as int?,
+    editionKey: json['cover_edition_key'] as String?,
   );
 
   factory BookModel.fromSubjectJson(Map<String, dynamic> json) => BookModel(
@@ -35,6 +37,7 @@ class BookModel {
         const [],
     coverId: json['cover_id'] as int?,
     firstPublishYear: json['first_publish_year'] as int?,
+    editionKey: json['cover_edition_key'] as String?,
   );
 
   final String key;
@@ -42,6 +45,7 @@ class BookModel {
   final List<String> authorNames;
   final int? coverId;
   final int? firstPublishYear;
+  final String? editionKey;
 
   Book toEntity() => Book(
     key: key,
@@ -51,5 +55,6 @@ class BookModel {
         ? ApiConstants.coverUrl(key: 'id', value: coverId.toString())
         : null,
     firstPublishYear: firstPublishYear,
+    editionKey: editionKey,
   );
 }

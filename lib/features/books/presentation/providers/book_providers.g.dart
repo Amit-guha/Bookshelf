@@ -235,8 +235,66 @@ final class GetBookDetailsUsecaseProvider
 String _$getBookDetailsUsecaseHash() =>
     r'8e7283fa056c692e896f687055deff712d577d51';
 
+@ProviderFor(getBookReadAccessUsecase)
+final getBookReadAccessUsecaseProvider = GetBookReadAccessUsecaseProvider._();
+
+final class GetBookReadAccessUsecaseProvider
+    extends
+        $FunctionalProvider<
+          GetBookReadAccess,
+          GetBookReadAccess,
+          GetBookReadAccess
+        >
+    with $Provider<GetBookReadAccess> {
+  GetBookReadAccessUsecaseProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'getBookReadAccessUsecaseProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$getBookReadAccessUsecaseHash();
+
+  @$internal
+  @override
+  $ProviderElement<GetBookReadAccess> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  GetBookReadAccess create(Ref ref) {
+    return getBookReadAccessUsecase(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(GetBookReadAccess value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<GetBookReadAccess>(value),
+    );
+  }
+}
+
+String _$getBookReadAccessUsecaseHash() =>
+    r'544017bec562e6535cd83db451d399cd009f39b0';
+
+/// `keepAlive: true` — the home screen's tabs tear down their off-screen
+/// widgets (TabBarView doesn't keep inactive tabs alive by default), which
+/// drops this provider's only listener. Without keepAlive that would dispose
+/// the cached list and force a fresh API call every time a tab is revisited.
+
 @ProviderFor(trendingBooks)
 final trendingBooksProvider = TrendingBooksFamily._();
+
+/// `keepAlive: true` — the home screen's tabs tear down their off-screen
+/// widgets (TabBarView doesn't keep inactive tabs alive by default), which
+/// drops this provider's only listener. Without keepAlive that would dispose
+/// the cached list and force a fresh API call every time a tab is revisited.
 
 final class TrendingBooksProvider
     extends
@@ -246,13 +304,17 @@ final class TrendingBooksProvider
           FutureOr<List<Book>>
         >
     with $FutureModifier<List<Book>>, $FutureProvider<List<Book>> {
+  /// `keepAlive: true` — the home screen's tabs tear down their off-screen
+  /// widgets (TabBarView doesn't keep inactive tabs alive by default), which
+  /// drops this provider's only listener. Without keepAlive that would dispose
+  /// the cached list and force a fresh API call every time a tab is revisited.
   TrendingBooksProvider._({
     required TrendingBooksFamily super.from,
     required TrendingPeriod super.argument,
   }) : super(
          retry: null,
          name: r'trendingBooksProvider',
-         isAutoDispose: true,
+         isAutoDispose: false,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -289,7 +351,12 @@ final class TrendingBooksProvider
   }
 }
 
-String _$trendingBooksHash() => r'7e66ed655e88cafb4b03846c373c2304aab1db72';
+String _$trendingBooksHash() => r'd82cf8fe97ea64026d4cfa9f7d57ce3155979b58';
+
+/// `keepAlive: true` — the home screen's tabs tear down their off-screen
+/// widgets (TabBarView doesn't keep inactive tabs alive by default), which
+/// drops this provider's only listener. Without keepAlive that would dispose
+/// the cached list and force a fresh API call every time a tab is revisited.
 
 final class TrendingBooksFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<List<Book>>, TrendingPeriod> {
@@ -299,8 +366,13 @@ final class TrendingBooksFamily extends $Family
         name: r'trendingBooksProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: true,
+        isAutoDispose: false,
       );
+
+  /// `keepAlive: true` — the home screen's tabs tear down their off-screen
+  /// widgets (TabBarView doesn't keep inactive tabs alive by default), which
+  /// drops this provider's only listener. Without keepAlive that would dispose
+  /// the cached list and force a fresh API call every time a tab is revisited.
 
   TrendingBooksProvider call(TrendingPeriod period) =>
       TrendingBooksProvider._(argument: period, from: this);
@@ -326,7 +398,7 @@ final class BooksBySubjectProvider
   }) : super(
          retry: null,
          name: r'booksBySubjectProvider',
-         isAutoDispose: true,
+         isAutoDispose: false,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -363,7 +435,7 @@ final class BooksBySubjectProvider
   }
 }
 
-String _$booksBySubjectHash() => r'2aea1e4e751ebb4e7c4328b68a8f7d23d0b677fc';
+String _$booksBySubjectHash() => r'58805a4b24c1247a1935b708797717b6bffd209e';
 
 final class BooksBySubjectFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<List<Book>>, String> {
@@ -373,7 +445,7 @@ final class BooksBySubjectFamily extends $Family
         name: r'booksBySubjectProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: true,
+        isAutoDispose: false,
       );
 
   BooksBySubjectProvider call(String subject) =>
@@ -396,7 +468,7 @@ final class BookDetailsProvider
     with $FutureModifier<BookDetails>, $FutureProvider<BookDetails> {
   BookDetailsProvider._({
     required BookDetailsFamily super.from,
-    required String super.argument,
+    required (String, {String? editionKey}) super.argument,
   }) : super(
          retry: null,
          name: r'bookDetailsProvider',
@@ -412,7 +484,7 @@ final class BookDetailsProvider
   String toString() {
     return r'bookDetailsProvider'
         ''
-        '($argument)';
+        '$argument';
   }
 
   @$internal
@@ -423,8 +495,8 @@ final class BookDetailsProvider
 
   @override
   FutureOr<BookDetails> create(Ref ref) {
-    final argument = this.argument as String;
-    return bookDetails(ref, argument);
+    final argument = this.argument as (String, {String? editionKey});
+    return bookDetails(ref, argument.$1, editionKey: argument.editionKey);
   }
 
   @override
@@ -438,10 +510,14 @@ final class BookDetailsProvider
   }
 }
 
-String _$bookDetailsHash() => r'999b98bb3685fdf6ff6b45deb48068ee3f8b2fde';
+String _$bookDetailsHash() => r'43cffcb643516a21e919271c8b39466a33465e24';
 
 final class BookDetailsFamily extends $Family
-    with $FunctionalFamilyOverride<FutureOr<BookDetails>, String> {
+    with
+        $FunctionalFamilyOverride<
+          FutureOr<BookDetails>,
+          (String, {String? editionKey})
+        > {
   BookDetailsFamily._()
     : super(
         retry: null,
@@ -451,9 +527,87 @@ final class BookDetailsFamily extends $Family
         isAutoDispose: true,
       );
 
-  BookDetailsProvider call(String key) =>
-      BookDetailsProvider._(argument: key, from: this);
+  BookDetailsProvider call(String workKey, {String? editionKey}) =>
+      BookDetailsProvider._(
+        argument: (workKey, editionKey: editionKey),
+        from: this,
+      );
 
   @override
   String toString() => r'bookDetailsProvider';
+}
+
+@ProviderFor(bookReadAccess)
+final bookReadAccessProvider = BookReadAccessFamily._();
+
+final class BookReadAccessProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<BookReadAccess>,
+          BookReadAccess,
+          FutureOr<BookReadAccess>
+        >
+    with $FutureModifier<BookReadAccess>, $FutureProvider<BookReadAccess> {
+  BookReadAccessProvider._({
+    required BookReadAccessFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'bookReadAccessProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$bookReadAccessHash();
+
+  @override
+  String toString() {
+    return r'bookReadAccessProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<BookReadAccess> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<BookReadAccess> create(Ref ref) {
+    final argument = this.argument as String;
+    return bookReadAccess(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is BookReadAccessProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$bookReadAccessHash() => r'f7b115d65fe25920daf520abc86c041c6e765b94';
+
+final class BookReadAccessFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<BookReadAccess>, String> {
+  BookReadAccessFamily._()
+    : super(
+        retry: null,
+        name: r'bookReadAccessProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  BookReadAccessProvider call(String editionKey) =>
+      BookReadAccessProvider._(argument: editionKey, from: this);
+
+  @override
+  String toString() => r'bookReadAccessProvider';
 }

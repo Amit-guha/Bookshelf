@@ -22,6 +22,7 @@ abstract class ApiConstants {
   static String subjectPath(String subject) => '/subjects/$subject.json';
   static String workPath(String olid) => '/works/$olid.json';
   static String editionPath(String olid) => '/books/$olid.json';
+  static String ratingsPath(String olid) => '/works/$olid/ratings.json';
   static String authorPath(String olid) => '/authors/$olid.json';
   static String isbnPath(String isbn) => '/isbn/$isbn.json';
 

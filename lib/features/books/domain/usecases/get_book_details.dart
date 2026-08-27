@@ -7,5 +7,6 @@ class GetBookDetails {
 
   final BookRepository _repository;
 
-  Future<Result<BookDetails>> call(String key) => _repository.getBookDetails(key);
+  Future<Result<BookDetails>> call(String workKey, {String? editionKey}) =>
+      _repository.getBookDetails(workKey, editionKey: editionKey);
 }
