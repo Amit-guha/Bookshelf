@@ -9,6 +9,8 @@ abstract class BookRepository {
 
   Future<Result<List<Book>>> getBooksBySubject(String subject, {int limit});
 
+  Future<Result<List<Book>>> searchBooks(String query, {int limit});
+
   Future<Result<BookDetails>> getBookDetails(String workKey, {String? editionKey});
 
   Future<Result<BookReadAccess>> getReadAccess(String editionKey);

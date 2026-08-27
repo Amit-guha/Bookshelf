@@ -29,6 +29,10 @@ class _FakeBookRepository implements BookRepository {
   @override
   Future<Result<BookReadAccess>> getReadAccess(String editionKey) async =>
       const Success(BookReadAccess(availability: EbookAvailability.none));
+
+  @override
+  Future<Result<List<Book>>> searchBooks(String query, {int limit = 20}) async =>
+      const Success([]);
 }
 
 void main() {

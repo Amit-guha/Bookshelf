@@ -48,6 +48,19 @@ class BookRepositoryImpl implements BookRepository {
   }
 
   @override
+  Future<Result<List<Book>>> searchBooks(String query, {int limit = 20}) async {
+    try {
+      final json = await _datasource.searchBooks(query, limit: limit);
+      final books = json
+          .map((doc) => BookModel.fromTrendingJson(doc).toEntity())
+          .toList();
+      return Success(books);
+    } catch (e) {
+      return ResultFailure(mapExceptionToFailure(e));
+    }
+  }
+
+  @override
   Future<Result<BookDetails>> getBookDetails(
     String workKey, {
     String? editionKey,

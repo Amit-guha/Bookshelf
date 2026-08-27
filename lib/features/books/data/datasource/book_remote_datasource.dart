@@ -31,6 +31,22 @@ class BookRemoteDatasource {
     return _worksFrom(response.data);
   }
 
+  /// Same field shape as `getTrendingBooks`/`getBooksBySubject`
+  /// (`BookModel.fromTrendingJson` handles it), but the top-level list key
+  /// is `docs` rather than `works`.
+  Future<List<Map<String, dynamic>>> searchBooks(
+    String query, {
+    required int limit,
+  }) async {
+    final response = await _apiClient.get<Map<String, dynamic>>(
+      ApiConstants.search,
+      queryParameters: {'q': query, 'limit': limit},
+      options: Options(extra: const {requiresAuthExtraKey: false}),
+    );
+    final docs = response.data?['docs'] as List?;
+    return docs?.cast<Map<String, dynamic>>() ?? const [];
+  }
+
   /// [workKey] is a work's `key` field as returned by the Trending/Subjects
   /// APIs, e.g. `/works/OL45804W` — the leading `/works/` segment is
   /// stripped to build the work detail path.

@@ -1,11 +1,11 @@
 import 'package:bookshelf/features/books/domain/entities/book.dart';
 import 'package:bookshelf/features/books/domain/entities/book_read_access.dart';
 import 'package:bookshelf/features/books/presentation/providers/book_providers.dart';
-import 'package:bookshelf/features/books/presentation/routes/book_routes.dart';
 import 'package:bookshelf/features/books/presentation/widgets/book_details_skeleton.dart';
 import 'package:bookshelf/features/books/presentation/widgets/book_detail_header.dart';
 import 'package:bookshelf/features/books/presentation/widgets/book_read_access_button.dart';
 import 'package:bookshelf/features/books/presentation/widgets/book_stats_row.dart';
+import 'package:bookshelf/features/reader/presentation/routes/reader_routes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -95,7 +95,7 @@ class BookDetailScreen extends ConsumerWidget {
       return;
     }
     context.pushNamed(
-      BookRoutes.readName,
+      ReaderRoutes.readName,
       extra: (readerUrl: readerUrl, title: book.title),
     );
   }

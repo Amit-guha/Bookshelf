@@ -283,6 +283,48 @@ final class GetBookReadAccessUsecaseProvider
 String _$getBookReadAccessUsecaseHash() =>
     r'544017bec562e6535cd83db451d399cd009f39b0';
 
+@ProviderFor(searchBooksUsecase)
+final searchBooksUsecaseProvider = SearchBooksUsecaseProvider._();
+
+final class SearchBooksUsecaseProvider
+    extends $FunctionalProvider<SearchBooks, SearchBooks, SearchBooks>
+    with $Provider<SearchBooks> {
+  SearchBooksUsecaseProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'searchBooksUsecaseProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$searchBooksUsecaseHash();
+
+  @$internal
+  @override
+  $ProviderElement<SearchBooks> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  SearchBooks create(Ref ref) {
+    return searchBooksUsecase(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(SearchBooks value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<SearchBooks>(value),
+    );
+  }
+}
+
+String _$searchBooksUsecaseHash() =>
+    r'079027e36f8e1e48a3e6217d77dbedd04090827f';
+
 /// `keepAlive: true` — the home screen's tabs tear down their off-screen
 /// widgets (TabBarView doesn't keep inactive tabs alive by default), which
 /// drops this provider's only listener. Without keepAlive that would dispose
@@ -610,4 +652,58 @@ final class BookReadAccessFamily extends $Family
 
   @override
   String toString() => r'bookReadAccessProvider';
+}
+
+/// Search-as-you-type: [search] debounces 400ms and fires nothing for an
+/// empty query, rather than firing one request per keystroke.
+
+@ProviderFor(BookSearch)
+final bookSearchProvider = BookSearchProvider._();
+
+/// Search-as-you-type: [search] debounces 400ms and fires nothing for an
+/// empty query, rather than firing one request per keystroke.
+final class BookSearchProvider
+    extends $AsyncNotifierProvider<BookSearch, List<Book>> {
+  /// Search-as-you-type: [search] debounces 400ms and fires nothing for an
+  /// empty query, rather than firing one request per keystroke.
+  BookSearchProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'bookSearchProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$bookSearchHash();
+
+  @$internal
+  @override
+  BookSearch create() => BookSearch();
+}
+
+String _$bookSearchHash() => r'320fc404a7654de8fa600ca03b82cc736245e4b3';
+
+/// Search-as-you-type: [search] debounces 400ms and fires nothing for an
+/// empty query, rather than firing one request per keystroke.
+
+abstract class _$BookSearch extends $AsyncNotifier<List<Book>> {
+  FutureOr<List<Book>> build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<List<Book>>, List<Book>>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<List<Book>>, List<Book>>,
+              AsyncValue<List<Book>>,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
 }
